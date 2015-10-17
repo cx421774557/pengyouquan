@@ -1,7 +1,6 @@
 from django.contrib import admin
-from app.models import UserInfo
-from app.models import subUserAttr
-from app.models import pubUserAttr
+from app.models import UserInfo, subUserAttr, pubUserAttr
+
 
 # Register your models here.
 
