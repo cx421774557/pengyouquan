@@ -25,20 +25,13 @@ def About(request):
 
 def GetUserinfo(request):
 	_uid = request.GET['uid']
-	try :
-		userinfo_dict = GetTree(_uid, 2)
-	except:
-		print 'error'
-		sys.exc_clear()
-	userinfo_dict = {}
-	
+	userinfo_dict = GetTree(_uid, 3)
 	return HttpResponse(json.dumps(userinfo_dict), content_type = 'application/json')
 
 def GetTree(uid, leave):
 	if leave > 0:
 		json_dict  = Getinfo(uid)
 		friendslist = json_dict['friendslist'].split(',')
-		print friendslist
 		if len(friendslist) > 0 and leave > 1:
 			json_dict['children'] = []
 			for friend in friendslist:
@@ -49,8 +42,8 @@ def Getinfo(uid):
 	try:
 		user = UserInfo.objects.get(uid = uid)	
 	except:
-		print 'uid:' + uid + ' is not find'
-		sys.exc_clear()
+		print "can't find user uid:" + uid 
+		pass
 	else:
 		json_dict = {
 			'id': user.id,

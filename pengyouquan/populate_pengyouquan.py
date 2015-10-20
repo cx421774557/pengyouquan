@@ -16,7 +16,7 @@ def list2str(list):
 
 def populate():
 	sum_dict = {}
-	with open('media/summary.txt', 'r') as f:
+	with open('data/summary_bak.txt', 'r') as f:
 		useinfo = f.readline()
 		sum_dict = json.loads(useinfo)
 		for k, v in sum_dict.items():

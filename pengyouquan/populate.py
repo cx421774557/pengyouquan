@@ -18,11 +18,7 @@ def list2str(list):
 def populate():
 	sum_dict = {}
 	info_dict = {}
-	with open('data/info_2.txt', 'r') as f:
-		useinfo = f.readlines()
-		for info in useinfo:
-			sum_dict = yaml.load(info[:-1])
-			info_dict[sum_dict['id']] = sum_dict
+	
 	with open('data/namecard_2.txt', 'r') as f:
 		nameinfo = f.readlines()
 		for info in nameinfo:
@@ -30,10 +26,23 @@ def populate():
 				sum_dict = yaml.load(info[:-1])
 			except:
 				continue
+			info_dict[sum_dict['id']] = sum_dict
 
+	with open('data/info_2.txt', 'r') as f:
+		useinfo = f.readlines()
+		for info in useinfo:
+			sum_dict = yaml.load(info[:-1])
+			print sum_dict
 			if sum_dict['id'] in info_dict.keys():
-				info_dict[sum_dict['id']]['name'] = sum_dict['name']
-				info_dict[sum_dict['id']]['region'] = sum_dict['region']
+				info_dict[sum_dict['id']]['friends_cnt'] = sum_dict['friends_cnt']
+				info_dict[sum_dict['id']]['friendslist'] = sum_dict['friendslist']
+				info_dict[sum_dict['id']]['views'] = sum_dict['views']
+				if 'isstar' in sum_dict.keys():
+					info_dict[sum_dict['id']]['isstar'] = sum_dict['isstar']
+				else:
+					info_dict[sum_dict['id']]['isstar'] = 0
+
+
 	for k, v in info_dict.items():
 		uid = k
 		name = ''
@@ -63,7 +72,9 @@ def populate():
 			friendslist = list2str(v['friends_list'])[:-1]
 		try:
 			add_useinfo(uid, name, friendscount, friendslist, views, region, isStar, subcount, pubcount)
+			print 1
 		except:
+			print 'add data failed', v['id']
 			continue	
 
 
